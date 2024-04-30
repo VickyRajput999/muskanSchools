@@ -11,7 +11,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('admin-assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{Auth::user()->name}}</a>
@@ -54,6 +54,12 @@
                     </a>
                   </li>
                   <li class="nav-item">
+                    <a href="{{ route('admin.student') }}" class="nav-link @if(Request::segment(2) == 'Student') active @endif">
+                      <i class="far fa-user nav-icon"></i>
+                      <p>Student</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
                     <a href="{{ route('admin.class') }}" class="nav-link @if(Request::segment(2) == 'class') active @endif">
                       <i class="far fa-user nav-icon"></i>
                       <p>Class</p>
@@ -71,6 +77,12 @@
                       <p>Asign Subject</p>
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a href="{{ route('admin.change_password.index') }}" class="nav-link @if(Request::segment(2) == 'change_password') active @endif">
+                      <i class="far fa-user nav-icon"></i>
+                      <p>Change Password</p>
+                    </a>
+                  </li>
                 </li>
                     @break
                 @case(2)
@@ -83,6 +95,12 @@
                       </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.change_password.index') }}" class="nav-link @if(Request::segment(2) == 'change_password') active @endif">
+                      <i class="far fa-user nav-icon"></i>
+                      <p>Change Password</p>
+                    </a>
+                  </li>
                 @break
                 @case(3)
                 <li class="nav-item menu-open">
@@ -94,6 +112,12 @@
                       </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.change_password.index') }}" class="nav-link @if(Request::segment(2) == 'change_password') active @endif">
+                      <i class="far fa-user nav-icon"></i>
+                      <p>Change Password</p>
+                    </a>
+                  </li>
                 @break
                 @case(4)
                 <li class="nav-item menu-open">
@@ -105,6 +129,12 @@
                       </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.change_password.index') }}" class="nav-link @if(Request::segment(2) == 'change_password') active @endif">
+                      <i class="far fa-user nav-icon"></i>
+                      <p>Change Password</p>
+                    </a>
+                  </li>
                 @break
                 @default
             @endswitch
