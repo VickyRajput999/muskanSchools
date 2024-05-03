@@ -22,15 +22,10 @@ Route::get('reset/{remember_token}',[AuthController::class, 'reset'])->name('aut
 Route::post('resetPassword', [AuthController::class, 'resetPassword'])->name('auth.resetPassword');
 Route::get('logout',[AuthController::class, 'logout'])->name('logout');
 
+//Student Login//
+// Route::get('/authLogin/student',[StudentEntrollControl::class,'studentlogin'])->name('AuthLogin.student');
+// Route::post('/authLogin/studentLogin',[StudentEntrollControl::class,'authstudentLogin'])->name('AuthLogin.studentlogin');
 
-
-// Route::get('/admin/dashboard', function () {
-//     return view('admin.dashboard');
-// });
-
-// Route::get('/admin/admin/list', function () {
-//     return view('admin.admin.list');
-// });
 
 Route::group(['middleware' => 'admin'], function(){
     Route::get('/admin/dashboard',[DashboardController::class,'dashboard'])->name('admin.dashboard');
@@ -75,6 +70,10 @@ Route::group(['middleware' => 'admin'], function(){
     //Enroll Student//
     Route::get('/student',[StudentEntrollControl::class,'index'])->name('admin.student');
     Route::get('/student/create',[StudentEntrollControl::class, 'addStudent'])->name('admin.student.addStudent');
+    Route::post('/student/insert',[StudentEntrollControl::class, 'insertStudent'])->name('admin.student.insertStudent');
+    Route::get('/student/edit/{id}',[StudentEntrollControl::class, 'editStudent'])->name('admin.student.edit');
+    Route::post('/student/update',[StudentEntrollControl::class, 'updateStudent'])->name('admin.student.update');
+    Route::get('/student/delete/{id}',[StudentEntrollControl::class, 'destroy'])->name('admin.student.delete');
 
 });
 
@@ -82,12 +81,15 @@ Route::group(['middleware' => 'teacher'], function(){
     Route::get('/teacher/dashboard',[DashboardController::class,'dashboard'])->name('teacher.dashboard');
     Route::get('/change_password',[UserController::class,'index'])->name('admin.change_password.index');
     Route::post('/change_password/update',[UserController::class, 'change_password'])->name('admin.change_password.changePassword');
+
 });
 
 Route::group(['middleware' => 'student'], function(){
     Route::get('/student/dashboard',[DashboardController::class,'dashboard'])->name('student.dashboard');
     Route::get('/change_password',[UserController::class,'index'])->name('admin.change_password.index');
     Route::post('/change_password/update',[UserController::class, 'change_password'])->name('admin.change_password.changePassword');
+
+
 });
 
 Route::group(['middleware' => 'parents'], function(){

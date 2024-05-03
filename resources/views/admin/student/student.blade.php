@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Enroll Student</h1>
+                        <h1>Student List</h1>
                     </div>
                     <div class="col-sm-6">
                         <div class="breadcrumb float-sm-right">
@@ -26,7 +26,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">All Subject List</h3>
+                                <h3 class="card-title">All Student List</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body p-0">
@@ -34,46 +34,58 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
-                                            <th>Class Name</th>
-                                            <th>Subject Name</th>
+                                            <th></th>
+                                            <th>Student Name</th>
+                                            <th>Roll No</th>
+                                            <th>Class</th>
+                                            <th>DOB</th>
+                                            <th>Contact No</th>
                                             <th>Status</th>
-                                            <th>Create By</th>
-                                            <th>Create Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    {{-- <tbody class="tbody" id="tbody">
-                                        @foreach ($allsubjects as $subject)
+                                    <tbody class="tbody" id="tbody">
+                                        @foreach ($students as $student)
                                         @php
-                                            $role = $subject->created_by;
+                                            $role = $student->role;
                                         @endphp
+                                            @if($role == 3)
                                             <tr>
                                                 <td><span id=""></span>{{ $loop->index + 1 }}</td>
-                                                <td><span id="name{{ $subject->class_id }}">{{ $subject->className }}</span></td>
-                                                <td><span id="subjectname {{ $subject->subject_id }}">{{ $subject->subject_name }}</span></td>
-                                                <td><span id="subjetstatus">{{ $subject->status }}</span></td>
-                                                <td>
-                                                    <span id="subject_createdNy{{ $subject->subject_id }}">
-                                                        @switch($role)
-                                                            @case(1)
-                                                                    <p>Admin</p>
-                                                                @break
-                                                            @case(2)
-                                                                    <p>Teacher</p>
-                                                                @break
-                                                            @default
-
-                                                        @endswitch
-                                                    </span>
+                                                <td><span id="studentImage{{ $student->id }}"><img
+                                                            src="{{ $student->student_image }}" alt="student_image"
+                                                            style="width: 30px; height:30px; border-radius:50px;"></span>
+                                                </td>
+                                                <td><span id="studentname{{ $student->id }}">{{ $student->name }}</span>
+                                                </td>
+                                                <td><span id="rollno {{ $student->id }}">{{ $student->student_roll_no }}</span>
+                                                </td>
+                                                    <td>
+                                                        @foreach ($classes as $class)
+                                                            @if($class->id == $student->student_class_id)
+                                                            {{ $class->className }}
+                                                                {{-- <span id="class {{ $student->student_class_id == $class->id}}"></span> --}}
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                @php
+                                                    $date_of_birth = date('d-m-Y', strtotime($student->date_of_birth));
+                                                @endphp
+                                                <td><span id="dob{{ $student->id }}">{{ $date_of_birth }}</span></td>
+                                                <td><span id="mobile{{ $student->id }}">{{ $student->mobile_no }}</span>
+                                                </td>
+                                                <td><span id="mobile {{ $student->status }}">{{ $student->status }}</span>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.asign.edit', [Crypt::encrypt($subject->id)]) }}
-                                                        " class="btn btn-primary">Edit</a>
-                                                        <a href="{{ route('admin.asignsubject.delete', ['id' => Crypt::encrypt($subject->id)]) }}" class="btn btn-danger">Delete</a>
+                                                    <a href="{{ route('admin.student.edit', [Crypt::encrypt($student->id)]) }}"
+                                                        class="btn btn-primary">Edit</a>
+                                                    <a href="{{ route('admin.student.delete', ['id' => Crypt::encrypt($student->id)]) }}"
+                                                        class="btn btn-danger">Delete</a>
                                                 </td>
                                             </tr>
+                                            @endif
                                         @endforeach
-                                    </tbody> --}}
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->
@@ -82,7 +94,7 @@
                     </div>
                     <!-- Button trigger modal -->
                     <!-- Modal -->
-                                      <!-- /.col -->
+                    <!-- /.col -->
                 </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->

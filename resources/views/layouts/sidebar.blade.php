@@ -104,14 +104,15 @@
                 @break
                 @case(3)
                 <li class="nav-item menu-open">
-                    <a href="{{ route('student.dashboard') }}" class="nav-link @if(Request::segment(2) == dashboard) active @endif">
-                      <i class="nav-icon fas fa-tachometer-alt"></i>
-                      <p>
-                        Dashboard
-                        <i class="right fas fa-angle-left"></i>
-                      </p>
+                    <a href="{{ route('student.dashboard') }}" class="nav-link @if(Request::segment(2) == 'dashboard') active @endif">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a href="{{ route('admin.change_password.index') }}" class="nav-link @if(Request::segment(2) == 'change_password') active @endif">
                       <i class="far fa-user nav-icon"></i>

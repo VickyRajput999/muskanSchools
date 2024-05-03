@@ -132,7 +132,6 @@ class AuthController extends Controller
         }
 
     }
-
     public function resetPassword(Request $request)
     {
         $remember_token = $request->token;

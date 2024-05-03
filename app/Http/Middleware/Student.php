@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\StudentEnroll;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +17,11 @@ class Student
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if (!empty(Auth::check())) {
+        // $student = StudentEnroll::check();
+        // if ($student) {
 
 
-        //     if (Auth::user()->role == 3) {
+        //     if ($student->student_email  == $request->student_email) {
                 return $next($request);
         //     } else {
         //         Auth::logout();

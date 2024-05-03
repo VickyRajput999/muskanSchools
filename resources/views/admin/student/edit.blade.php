@@ -10,109 +10,122 @@
                     <div class="col-md-12 mt-5 ">
                         <!-- general form elements -->
                         <div class="card card-primary">
-                            <div class="col-md-4 my-3">
-                                <button class="btn btn-primary d-flex justify-content-end"><a href="{{ route('admin.student') }}" style="color: white;">Back</a></button>
-                            </div>
                             <div class="card-header">
-                                <h3 class="card-title">Enroll Student</h3>
+                                <h3 class="card-title">Edit Student Profile</h3>
                             </div>
                             <form id="enroll_student" name="enroll_student" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-3 form-group">
+                                            <input type="text" hidden name="id" id="id" value="{{ $students->id }}">
                                             <label for="">First Name<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="name" id="name">
+                                            <input type="text" class="form-control" name="name" id="name"
+                                                value="{{ $students->name }}">
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label for="">Last Name</label>
-                                            <input type="text" class="form-control" name="last_name" id="last_name">
+                                            <input type="text" class="form-control" name="last_name" id="last_name"
+                                                value="{{ $students->student_lastName }}">
                                         </div>
-                                        @php
+                                        {{-- @php
                                             $roll_number = rand(111111,999999);
                                             $admission_number = 'MSM-'.rand(1111111111,9999999999);
-                                        @endphp
+                                        @endphp --}}
                                         <div class="col-md-3 form-group">
                                             <label for="">Administion No<span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="adminision_no"
-                                                id="adminision_no" value="{{ $admission_number }}">
+                                                id="adminision_no" value="{{ $students->adminision_no }}">
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label for="">Roll No<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" name="roll_no" id="roll_no" value="{{ $roll_number }}">
+                                            <input type="text" class="form-control" name="roll_no" id="roll_no"
+                                                value="{{ $students->student_roll_no }}">
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label for="">Admission Date<span class="text-danger">*</span></label>
                                             <input type="date" class="form-control" name="adminssion_date"
-                                                id="adminssion_date">
+                                                id="adminssion_date" value="{{ $students->adminision_date }}">
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label for="class">Class<span class="text-danger">*</span></label>
                                             <select name="student_class" id="student_class" class="form-control">
-                                                <option value="" disabled selected>Select Class</option>
-                                                @foreach ($classes as $class)
-                                                    <option {{ $class->id == 'id' ? 'selected' : '' }} value="{{ $class->id }}">{{ $class->className }}</option>
-                                                @endforeach
+                                                @php
+                                                    $classes = App\Models\ClassModel::where('status', '!=', 'inactive')->get();
+                                                @endphp
+                                                 @foreach ($classes as $class)
+                                                 @if($class->id == $students->student_class_id)
+                                                    <option value="{{ $class->id }}">{{ $class->className }}</option>
+                                                 @endif
+                                             @endforeach
                                             </select>
+
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label for="">Gender<span class="text-danger">*</span></label>
                                             <select name="gender" id="gender" class="form-control">
-                                                <option value="" disabled selected>Select Gender</option>
-                                                <option value="Male">Male</option>
-                                                <option value="Female">Female</option>
-                                                <option value="Other">Other</option>
+                                                {{-- <option value="" disabled selected>Select Gender</option> --}}
+                                                <option {{ $students->id == 'gender' ? 'seleted' : '' }} value="Male">Male</option>
+                                                <option {{ $students->id == 'gender' ? 'seleted' : '' }} value="Female">Female</option>
+                                                <option {{ $students->id == 'gender' ? 'seleted' : '' }} value="Female">Other</option>
                                             </select>
                                         </div>
 
                                         <div class="col-md-3 form-group">
                                             <label for="">Date of Birth<span class="text-danger">*</span></label>
-                                            <input type="date" class="form-control" name="student_dob" id="student_dob">
-                                        </div>
-                                        <div class="col-md-3 form-group">
-                                            <label for="">Caste<span class="text-danger">*</span></label>
-                                            <select name="caste" id="caste" class="form-control">
-                                                <option value="" disabled selected>Select Caste</option>
-                                                <option value="General">General</option>
-                                                <option value="OBC">OBC</option>
-                                                <option value="SC">SC</option>
-                                                <option value="ST">ST</option>
-                                            </select>
+                                            <input type="date" class="form-control" name="student_dob" id="student_dob"
+                                                value="{{ $students->date_of_birth }}">
                                         </div>
 
                                         <div class="col-md-3 form-group">
+                                            <label for="caste">Caste<span class="text-danger">*</span></label>
+                                            <select name="caste" id="caste" class="form-control">
+                                                {{-- <option value="" disabled selected>Select Caste</option> --}}
+                                                <option {{$students->id == 'student_caste' ? 'selected' : '' }} value="General">General</option>
+                                                <option {{$students->id == 'student_caste' ? 'selected' : '' }} value="OBC">OBC</option>
+                                                <option {{$students->id == 'student_caste' ? 'selected' : '' }} value="SC">SC</option>
+                                                <option {{$students->id == 'student_caste' ? 'selected' : '' }} value="ST">ST</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 form-group">
                                             <label for="">Religion<span class="text-danger">*</span></label>
                                             <select name="Religion" id="Religion" class="form-control">
-                                                <option value="" disabled selected>Select Religion</option>
-                                                <option value="Hindu">Hindu</option>
-                                                <option value="Muslim">Muslim</option>
-                                                <option value="Sikh">Sikh</option>
+                                                <option {{ $students->id == 'student_religion' ? 'selected' : '' }}value="Hindu">Hindu</option>
+                                                <option {{ $students->id == 'student_religion' ? 'selected' : '' }}value="Muslim">Muslim</option>
+                                                <option {{ $students->id == 'student_religion' ? 'selected' : '' }}value="Sikh">Sikh</option>
+                                                <option {{ $students->id == 'student_religion' ? 'selected' : '' }}value="Other">Other</option>
                                             </select>
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label for="">Mobile No<span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="student_mobile"
-                                                id="student_mobile">
+                                                id="student_mobile" value="{{ $students->mobile_no }}">
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label for="">Upload Image<span class="text-danger">*</span></label>
-                                            <input type="file" class="form-control" name="student_image"
-                                                id="student_image">
+                                            <input type="file" class="form-control" name="student_image" id="student_image">
+                                            <!-- Display the existing student image if available -->
+                                            @if ($students->student_image)
+                                                <div class="mt-2">
+                                                    <img src="{{ asset($students->student_image) }}" alt="Student Image" class="img-thumbnail" style="max-width: 100px;">
+                                                </div>
+                                            @endif
                                         </div>
+
                                         <div class="col-md-3 form-group">
                                             <label for="">Blood Group<span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="student_blood_group"
-                                                id="student_blood_group">
+                                                id="student_blood_group" value="{{ $students->student_blood_group }}">
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label for="">Email Id<span class="text-danger">*</span></label>
                                             <input type="email" class="form-control" name="email"
-                                                id="email">
+                                                id="email" value="{{ $students->email }}">
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label for="">Password<span class="text-danger">*</span></label>
                                             <input type="password" class="form-control" name="password"
-                                                id="password">
+                                                id="password" value="{{ $students->password }}">
                                         </div>
                                         <div class="col-md-3 form-group">
                                             <label for="">Status<span class="text-danger">*</span></label>
@@ -122,17 +135,12 @@
                                                 <option value="Inactive">Inactive</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-3 form-group">
-                                            {{-- <label for="">Blood Group<span class="text-danger">*</span></label> --}}
-                                            <input type="text" hidden class="form-control" name="role"
-                                                id="role" value="3">
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
 
                                 <div class="card-footer d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
                             </form>
                         </div>
@@ -275,18 +283,18 @@
                 e.preventDefault();
                 if ($(this).valid()) {
                     let formData = new FormData($(this)[0]);
-                    $('button[type=submit]').prop('disabled',true);
+                    $('button[type=submit]').prop('disabled', true);
 
                     $.ajax({
-                        url: "{{ route('admin.student.insertStudent') }}",
+                        url: "{{ route('admin.student.update') }}",
                         type: 'POST',
                         data: formData,
                         dataType: 'json',
                         contentType: false,
                         processData: false,
                         success: function(res) {
-                            $('button[type=submit]').prop('disabled',false);
-                            if(res.status == 'success'){
+                            $('button[type=submit]').prop('disabled', false);
+                            if (res.status == 'success') {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Success',
@@ -294,9 +302,10 @@
                                     confirmButtonColor: '#3085d6',
                                     confirmButtonText: 'OK'
                                 }).then((result) => {
-                                    window.location.href="{{ route('admin.student') }}";
+                                    window.location.href =
+                                        "{{ route('admin.student') }}";
                                 });
-                            }else{
+                            } else {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Error!',
